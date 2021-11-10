@@ -1,6 +1,7 @@
 " Code highlight configuration.
 "
 " @author Maciej Bedra
+" @author Dineshkumar Gnanaprakasam
 
 " Treesitter setup.
 lua << EOF
@@ -16,8 +17,11 @@ lua << EOF
     ensure_installed = {
       "css",
       "html",
+      "java",
       "javascript",
       "json",
+      "python",
+      "typescript",
       "yaml"
     },
   }

@@ -1,6 +1,7 @@
 " Configuration for fuzzy finder.
 "
 " @author Maciej Bedra
+" @author Dineshkumar Gnanaprakasam
 
 " Search result on top
 let $FZF_DEFAULT_OPTS = '--reverse'
@@ -13,3 +14,9 @@ let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6 } }
 
 " Key binding used to launch fuzzy finder (text occurrence)
 " nmap <C-_><C-_> :Rg<CR>
+
+" RipGrep Settings
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
+

@@ -1,20 +1,28 @@
 # Docker file for base Neovim image.
 #
 # @author Maciej Bedra
+# @author Dineshkumar Gnanaprakasam
 
-# Debian image as base (unstable for newest software).
-FROM debian:sid-20210816
+# Debian image as base
+FROM debian:bookworm-20211011
 
-# Set image locale.
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV TZ=Europe/Warsaw
+# Set the locale
+RUN apt-get update && apt-get -y install locales
+
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+    
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8
+
+# Set timezone
+ENV TZ="America/New_York"
 
 # Expose some ports to host by default.
 EXPOSE 8080 8081 8082 8083 8084 8085
 
 # Define which Neovim COC extensions should be installed.
-ARG COC='coc-css coc-eslint coc-html coc-json coc-sh coc-sql coc-tsserver coc-yaml'
+ARG COC='coc-css coc-eslint coc-html coc-json coc-sh coc-sql coc-tsserver coc-java coc-java-debug coc-xml coc-yaml'
 
 # Lazygit variables
 ARG LG='lazygit'
@@ -35,13 +43,13 @@ ARG LG_ARCHIVE='lazygit.tar.gz'
 # 11. npm for NodeJS.
 # 12. tzdata to set default container timezone.
 # 13. Everything needed to install Neovim from source.
-RUN apt-get update && apt-get -y install curl fzf ripgrep tree git xclip python3 python3-pip nodejs npm tzdata ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+RUN apt-get -y install curl fzf ripgrep tree git xclip python3 python3-pip nodejs npm tzdata ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip openjdk-11-jdk watchman
 
 # Cooperate Neovim with Python 3.
 RUN pip3 install pynvim
 
 # Cooperate NodeJS with Neovim.
-RUN npm i -g neovim
+RUN npm i -g neovim typescript
 
 # Install Neovim from source.
 RUN mkdir -p /root/TMP
@@ -71,7 +79,10 @@ RUN nvim --headless +PlugInstall +qall
 RUN mkdir -p /root/.config/coc/extensions
 
 # Install Neovim COC extensions.
-RUN cd /root/.config/coc/extensions && npm install $COC --global --only=prod
+RUN cd /root/.config/coc/extensions
+
+# Install Node.js debugger adapter.
+RUN cd /root/.config/nvim/plugins/vimspector && python3 install_gadget.py --force-enable-node
 
 # Install Lazygit from binary
 RUN mkdir -p /root/TMP && cd /root/TMP && curl -L -o $LG_ARCHIVE $LG_GITHUB

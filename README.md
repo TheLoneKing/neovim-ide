@@ -74,9 +74,9 @@ All components for Neovim are installed (pynvim with pip and neovim with npm).
 
 Image contains general settings and some key bindings for Neovim (saved in **/root/.config/nvim/general/**).
 
-Spell check for English and Polish is added.
+Spell check for English is added.
 
-Europe/Warsaw as default timezone.
+America/New_York as default timezone.
 
 Extensions are managed by Vim Plug. Installed and configured extensions:
 

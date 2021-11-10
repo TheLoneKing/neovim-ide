@@ -16,6 +16,12 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
+" Enable tabline
+let g:airline#extensions#tabline#enabled = 1
+
+" Enable Git change summary if there are changes
+let g:airline#extensions#hunks#non_zero_only = 1
+
 " Unicode symbols
 let g:airline_left_sep = ''
 let g:airline_left_sep = ''

@@ -1,6 +1,7 @@
 " Conquer of completion configuration.
 "
 " @author Maciej Bedra
+" @author Dineshkumar Gnanaprakasam
 
 " Do not pass messages to ins-completion-menu
 set shortmess+=c
@@ -65,13 +66,13 @@ nmap <leader>ca <Plug>(coc-codeaction)
 nmap <F2> <Plug>(coc-rename)
 
 " Key binding used to go to definition
-nmap <leader>cd <Plug>(coc-definition)
+nmap <leader>gd <Plug>(coc-definition)
 
 " Key binding used to go to type definition
-nmap <leader>ct <Plug>(coc-type-definition)
+nmap <leader>gt <Plug>(coc-type-definition)
 
 " Key binding used to to to implementation
-nmap <leader>ci <Plug>(coc-implementation)
+nmap <leader>gi <Plug>(coc-implementation)
 
 " Key binding used to go to declaration
 nmap <leader>cr <Plug>(coc-declaration)
@@ -89,4 +90,10 @@ nmap <leader>ce :CocList diagnostics<CR>
 nmap <M-7> :CocList outline<CR>
 
 " Key binding used to find symbol
-nmap <leader>cs :CocList -I symbols<CR>
+nmap <leader>cls :CocList -I symbols<CR>
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
